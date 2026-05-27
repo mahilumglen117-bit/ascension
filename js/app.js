@@ -210,6 +210,13 @@ function updateStats() {
     const daysActiveEl = document.getElementById('days-active');
     const startDateEl = document.getElementById('start-date');
 
+    // Mobile Progress Bar
+    const mobileBar = document.getElementById('mobile-progress-bar-mobile');
+    const mobilePercent = document.getElementById('ring-percent-mobile');
+    
+    if (mobileBar) mobileBar.style.width = `${percent}%`;
+    if (mobilePercent) mobilePercent.innerText = `${percent}%`;
+
     if (dashComp) dashComp.innerText = `${percent}%`;
     if (dashBar) dashBar.style.width = `${percent}%`;
     if (dashWater) dashWater.innerText = state.water;
