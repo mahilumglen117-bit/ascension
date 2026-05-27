@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ascension | Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-slate-950 text-slate-200 font-sans antialiased selection:bg-blue-500 selection:text-white">
+
+    <!-- Mobile Header -->
+    <div class="lg:hidden flex justify-between items-center p-6 border-b border-slate-800 bg-slate-900/50 backdrop-blur-md sticky top-0 z-50">
+        <div class="text-xl font-bold tracking-wider text-white">ASCENSION<span class="text-blue-500">.</span></div>
+        <button onclick="toggleSidebar()" class="p-2 text-slate-400 hover:text-white transition">
+            <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+    </div>
+
+    <div class="flex h-screen overflow-hidden">
+        
+        <!-- Sidebar -->
+        <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 z-40 w-64 bg-slate-900 border-r border-slate-800 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col justify-between p-6">
+            <div>
+                <div class="text-2xl font-bold tracking-widest text-white mb-10">ASCENSION<span class="text-blue-500">.</span></div>
+                <nav class="space-y-2">
+                    <a href="index.html" class="flex items-center gap-3 p-3 rounded-xl bg-blue-600 text-white shadow-lg shadow-blue-900/20">
+                        <i data-lucide="layout-dashboard" class="w-5 h-5"></i> <span class="font-medium">Overview</span>
+                    </a>
+                    <a href="progress.html" class="flex items-center gap-3 p-3 rounded-xl text-slate-400 hover:bg-slate-800 hover:text-white transition">
+                        <i data-lucide="check-circle-2" class="w-5 h-5"></i> <span class="font-medium">Routine</span>
+                    </a>
+                </nav>
+            </div>
+            
+            <!-- Quote Card -->
+            <div class="p-4 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700">
+                <p class="text-xs text-slate-400 mb-2">Daily Quote</p>
+                <p class="text-sm text-slate-200 italic">"Discipline is freedom."</p>
+            </div>
+        </aside>
+
+        <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-30 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto relative">
+            <div class="absolute top-0 left-0 w-full h-96 bg-blue-600/10 blur-[120px] pointer-events-none"></div>
+
+            <div class="p-6 lg:p-12 max-w-6xl mx-auto relative z-10">
+                <!-- Header -->
+                <header class="mb-10 flex justify-between items-start flex-wrap gap-4">
+                    <div>
+                        <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">Welcome back, King.</h1>
+                        <p class="text-slate-400" id="dynamic-date">Loading date...</p>
+                    </div>
+                    
+                    <!-- Level Badge -->
+                    <div class="flex items-center gap-3 px-4 py-2 bg-slate-900 rounded-full border border-blue-500/30">
+                        <div class="text-right">
+                            <div class="text-[10px] text-slate-500 uppercase">Rank</div>
+                            <div class="text-sm font-bold text-blue-400" id="user-title">BEGINNER</div>
+                        </div>
+                        <div class="w-px h-8 bg-slate-700"></div>
+                        <div class="text-right">
+                            <div class="text-[10px] text-slate-500 uppercase">Level</div>
+                            <div class="text-xl font-bold text-white" id="user-level">1</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-[10px] text-slate-500 uppercase">XP</div>
+                            <div class="text-xs font-bold text-blue-400" id="user-xp">0/100</div>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Grid Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    
+                    <!-- Card 1: Completion -->
+                    <div class="glass-card p-6 rounded-3xl border border-white/5 bg-white/5 relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition">
+                            <i data-lucide="target" class="w-24 h-24 text-blue-500"></i>
+                        </div>
+                        <h3 class="text-slate-400 text-sm uppercase tracking-wider mb-2">Daily Completion</h3>
+                        <div class="text-5xl font-bold text-white mb-4" id="dash-completion">0%</div>
+                        <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                            <div id="dash-progress-bar" class="h-full bg-blue-500 w-0 transition-all duration-1000"></div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Journey -->
+                    <div class="glass-card p-6 rounded-3xl border border-white/5 bg-white/5">
+                        <div class="flex justify-between items-start mb-6">
+                            <h3 class="text-slate-400 text-sm uppercase tracking-wider">Your Journey</h3>
+                            <div class="p-2 bg-purple-500/20 rounded-lg text-purple-400">
+                                <i data-lucide="calendar" class="w-5 h-5"></i>
+                            </div>
+                        </div>
+                        <div class="text-5xl font-bold text-white mb-1" id="days-active">0</div>
+                        <p class="text-slate-500 text-sm">days active</p>
+                        <div class="mt-4 pt-4 border-t border-slate-800">
+                            <p class="text-xs text-slate-500">Started</p>
+                            <p class="text-sm text-white" id="start-date">-</p>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Streak -->
+                    <div class="glass-card p-6 rounded-3xl border border-white/5 bg-white/5">
+                        <div class="flex justify-between items-start mb-6">
+                            <h3 class="text-slate-400 text-sm uppercase tracking-wider">Current Streak</h3>
+                            <div class="p-2 bg-orange-500/20 rounded-lg text-orange-400">
+                                <i data-lucide="flame" class="w-5 h-5"></i>
+                            </div>
+                        </div>
+                        <div class="text-5xl font-bold text-white mb-1" id="streak-count">0</div>
+                        <p class="text-slate-500 text-sm">Days in a row</p>
+                    </div>
+
+                    <!-- Card 4: Quick Water -->
+                    <div class="glass-card p-6 rounded-3xl border border-white/5 bg-white/5 flex flex-col justify-center items-center text-center">
+                        <h3 class="text-slate-400 text-sm uppercase tracking-wider mb-4 w-full text-left">Hydration</h3>
+                        <div class="text-4xl font-bold text-white mb-2" id="dash-water">0</div>
+                        <p class="text-slate-500 text-sm mb-4">Glasses today</p>
+                        <a href="progress.html#water-tracker" class="text-blue-400 hover:text-blue-300 text-sm transition">Track Water &rarr;</a>
+                    </div>
+
+                </div>
+
+                <!-- Bottom CTA -->
+                <div class="mt-12 text-center">
+                    <a href="progress.html" class="inline-flex items-center gap-2 px-8 py-4 bg-white text-slate-950 rounded-full font-bold hover:bg-blue-50 transition-all transform hover:scale-105 shadow-xl shadow-blue-900/20">
+                        Start Routine
+                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
